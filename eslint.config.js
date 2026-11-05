@@ -7,7 +7,16 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   {
-    ignores: ['**/dist/**', '**/node_modules/**', '**/src/generated/**', '**/routeTree.gen.ts'],
+    // Le clone du dépôt analysé (REPO_DIR, dans /data) et le code généré par shadcn ne sont pas lintés.
+    ignores: [
+      '**/dist/**',
+      '**/node_modules/**',
+      '**/src/generated/**',
+      '**/routeTree.gen.ts',
+      'data/**',
+      'apps/web/src/components/ui/**',
+      'apps/web/src/hooks/**',
+    ],
   },
   eslint.configs.recommended,
   {

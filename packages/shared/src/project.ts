@@ -15,7 +15,13 @@ export const CommitSummarySchema = z.object({
   subject: z.string(),
 });
 
+export const RepoInfoSchema = z.object({
+  name: z.string(),
+  branch: z.string(),
+});
+
 export const ProjectContextSchema = z.object({
+  repo: RepoInfoSchema,
   commitSha: z.string(),
   analyzedAt: z.string(),
   readmeSummary: z.string().nullable(),

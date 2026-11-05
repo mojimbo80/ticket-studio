@@ -10,33 +10,91 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AnalyseRouteImport } from './routes/analyse'
+import { Route as AtelierRouteImport } from './routes/atelier'
+import { Route as ContexteRouteImport } from './routes/contexte'
+import { Route as DiagnosticRouteImport } from './routes/diagnostic'
+import { Route as SaisieRouteImport } from './routes/saisie'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AnalyseRoute = AnalyseRouteImport.update({
+  id: '/analyse',
+  path: '/analyse',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AtelierRoute = AtelierRouteImport.update({
+  id: '/atelier',
+  path: '/atelier',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContexteRoute = ContexteRouteImport.update({
+  id: '/contexte',
+  path: '/contexte',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DiagnosticRoute = DiagnosticRouteImport.update({
+  id: '/diagnostic',
+  path: '/diagnostic',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SaisieRoute = SaisieRouteImport.update({
+  id: '/saisie',
+  path: '/saisie',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/analyse': typeof AnalyseRoute
+  '/atelier': typeof AtelierRoute
+  '/contexte': typeof ContexteRoute
+  '/diagnostic': typeof DiagnosticRoute
+  '/saisie': typeof SaisieRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/analyse': typeof AnalyseRoute
+  '/atelier': typeof AtelierRoute
+  '/contexte': typeof ContexteRoute
+  '/diagnostic': typeof DiagnosticRoute
+  '/saisie': typeof SaisieRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/analyse': typeof AnalyseRoute
+  '/atelier': typeof AtelierRoute
+  '/contexte': typeof ContexteRoute
+  '/diagnostic': typeof DiagnosticRoute
+  '/saisie': typeof SaisieRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    '/' | '/analyse' | '/atelier' | '/contexte' | '/diagnostic' | '/saisie'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/analyse' | '/atelier' | '/contexte' | '/diagnostic' | '/saisie'
+  id:
+    | '__root__'
+    | '/'
+    | '/analyse'
+    | '/atelier'
+    | '/contexte'
+    | '/diagnostic'
+    | '/saisie'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AnalyseRoute: typeof AnalyseRoute
+  AtelierRoute: typeof AtelierRoute
+  ContexteRoute: typeof ContexteRoute
+  DiagnosticRoute: typeof DiagnosticRoute
+  SaisieRoute: typeof SaisieRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +106,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/analyse': {
+      id: '/analyse'
+      path: '/analyse'
+      fullPath: '/analyse'
+      preLoaderRoute: typeof AnalyseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/atelier': {
+      id: '/atelier'
+      path: '/atelier'
+      fullPath: '/atelier'
+      preLoaderRoute: typeof AtelierRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contexte': {
+      id: '/contexte'
+      path: '/contexte'
+      fullPath: '/contexte'
+      preLoaderRoute: typeof ContexteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/diagnostic': {
+      id: '/diagnostic'
+      path: '/diagnostic'
+      fullPath: '/diagnostic'
+      preLoaderRoute: typeof DiagnosticRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/saisie': {
+      id: '/saisie'
+      path: '/saisie'
+      fullPath: '/saisie'
+      preLoaderRoute: typeof SaisieRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AnalyseRoute: AnalyseRoute,
+  AtelierRoute: AtelierRoute,
+  ContexteRoute: ContexteRoute,
+  DiagnosticRoute: DiagnosticRoute,
+  SaisieRoute: SaisieRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

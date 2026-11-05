@@ -1,11 +1,11 @@
 import { queryOptions } from '@tanstack/react-query';
 import { HealthResponseSchema } from '@ticket-studio/shared';
-import { apiGet } from './client';
-import { queryKeys } from './query-keys';
+import { apiFetch } from '@/api/client';
+import { queryKeys } from './keys';
 
 export function healthQueryOptions() {
   return queryOptions({
     queryKey: queryKeys.health(),
-    queryFn: () => apiGet('/health', HealthResponseSchema),
+    queryFn: () => apiFetch('/health', HealthResponseSchema),
   });
 }

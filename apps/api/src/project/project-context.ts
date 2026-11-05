@@ -68,8 +68,14 @@ interface StoredProject {
   analyzedAt: Date;
 }
 
+// « mojimbo80/plume » à partir de l'URL du dépôt, sans le suffixe .git.
+function getRepoName(url: string): string {
+  return new URL(url).pathname.replace(/^\/+|\.git$/g, '').replace(/\/+$/, '');
+}
+
 function toProjectContext(stored: StoredProject): ProjectContext {
   return ProjectContextSchema.parse({
+    repo: { name: getRepoName(repoConfig.url), branch: repoConfig.branch },
     commitSha: stored.commitSha,
     analyzedAt: stored.analyzedAt.toISOString(),
     readmeSummary: stored.readmeSummary,
