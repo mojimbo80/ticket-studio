@@ -6,3 +6,5 @@ coverage
 .env.example
 apps/api/src/generated
 /data
+test-results
+playwright-report

@@ -7,3 +7,5 @@ apps/api/prisma/migrations
 apps/web/src/routeTree.gen.ts
 docs/maquettes
 .claude
+test-results
+playwright-report
