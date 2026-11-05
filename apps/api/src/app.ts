@@ -5,6 +5,7 @@ import { env } from './config/env';
 import { logger } from './lib/logger';
 import { errorHandler, notFoundHandler } from './middleware/error-handler';
 import { analyzeRouter } from './routes/analyze';
+import { chatRouter } from './routes/chat';
 import { healthRouter } from './routes/health';
 import { projectRouter } from './routes/project';
 import { suggestionsRouter } from './routes/suggestions';
@@ -21,6 +22,7 @@ export function createApp(): express.Express {
   app.use('/api', projectRouter);
   app.use('/api', analyzeRouter);
   app.use('/api', suggestionsRouter);
+  app.use('/api', chatRouter);
 
   app.use(notFoundHandler);
   app.use(errorHandler);

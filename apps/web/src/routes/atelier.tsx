@@ -3,11 +3,12 @@ import { createFileRoute, Navigate } from '@tanstack/react-router';
 import { z } from 'zod';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { type AtelierTab, AtelierSidebar } from '@/features/atelier/atelier-sidebar';
+import { type AtelierAnswers, useAtelierStore } from '@/features/atelier/atelier-store';
 import { buildAtelierView } from '@/features/atelier/atelier-view';
-import { useAtelierStore } from '@/features/atelier/atelier-store';
 import { DiagnosticPanel } from '@/features/atelier/diagnostic-panel';
 import { SuggestionsPanel } from '@/features/atelier/suggestions-panel';
 import { TicketPanel } from '@/features/atelier/ticket-panel';
+import { ConversationPanel } from '@/features/chat/conversation-panel';
 import { useTicketStore } from '@/features/saisie/ticket-store';
 import { requireAnalysis, requireTicketTitle } from '@/lib/ticket-guard';
 import { diagnosisQueryOptions } from '@/queries/analysis';
@@ -16,6 +17,8 @@ import { suggestionsQueryOptions } from '@/queries/suggestions';
 
 const atelierSearchSchema = z.object({
   vue: z.enum(['conversation', 'suggestions', 'diagnostic']).catch('conversation'),
+  // Demande pré-remplie dans la conversation, venant d'une recommandation du diagnostic.
+  demande: z.string().max(500).optional().catch(undefined),
 });
 
 const PANEL_TEXT: Record<AtelierTab, { title: string; sub: string }> = {
@@ -41,9 +44,11 @@ export const Route = createFileRoute('/atelier')({
 });
 
 function AtelierPage() {
-  const { vue } = Route.useSearch();
+  const { vue, demande } = Route.useSearch();
   const ticket = useTicketStore((state) => state.ticket);
   const resolutions = useAtelierStore((state) => state.resolutions);
+  const manualPrecisions = useAtelierStore((state) => state.manualPrecisions);
+  const manualQuestions = useAtelierStore((state) => state.manualQuestions);
   const { data: diagnostic } = useQuery(diagnosisQueryOptions());
   const suggestionsQuery = useQuery(suggestionsQueryOptions(ticket));
   const { data: project } = useQuery(projectContextQueryOptions());
@@ -52,11 +57,12 @@ function AtelierPage() {
     return <Navigate to="/analyse" />;
   }
 
+  const answers: AtelierAnswers = { resolutions, manualPrecisions, manualQuestions };
   const view = buildAtelierView(
     ticket,
     diagnostic,
     suggestionsQuery.data?.suggestions ?? [],
-    resolutions,
+    answers,
   );
 
   return (
@@ -76,10 +82,8 @@ function AtelierPage() {
           </header>
 
           {vue === 'conversation' && (
-            <div
-              aria-label="Conversation (bientôt disponible)"
-              className="min-h-64 rounded-[14px] border border-dashed"
-            />
+            // La clé remonte le panneau quand une nouvelle demande arrive, pour reprendre le brouillon.
+            <ConversationPanel key={demande ?? ''} initialDraft={demande ?? ''} />
           )}
 
           {vue === 'suggestions' && (

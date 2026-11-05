@@ -8,18 +8,18 @@ import {
   type TicketSection,
 } from '@ticket-studio/shared';
 import { buildDiagnosisView } from '@/features/diagnostic/diagnosis-view';
-import type { SuggestionResolution } from './atelier-store';
+import type { AtelierAnswers } from './atelier-store';
 
 const OPEN_QUESTION_ANSWER = /question ouverte/i;
 
 export interface Precision {
-  suggestionId: string;
+  id: string;
   label: string;
   text: string;
 }
 
 export interface OpenQuestion {
-  suggestionId: string;
+  id: string;
   title: string;
 }
 
@@ -41,12 +41,12 @@ export function buildAtelierView(
   ticket: Ticket,
   diagnostic: Diagnostic,
   suggestions: Suggestion[],
-  resolutions: Record<string, SuggestionResolution>,
+  answers: AtelierAnswers,
 ): AtelierView {
   const base = buildDiagnosisView(ticket, diagnostic);
 
   const answered = suggestions.flatMap((suggestion) => {
-    const resolution = resolutions[suggestion.id];
+    const resolution = answers.resolutions[suggestion.id];
     return resolution?.status === 'answered' ? [{ suggestion, answer: resolution.answer }] : [];
   });
 
@@ -71,17 +71,24 @@ export function buildAtelierView(
     ...computeStatus(ticket, issues),
     issues,
     sections: base.sections,
-    precisions: answered
-      .filter(({ answer }) => !isOpenAnswer(answer))
-      .map(({ suggestion, answer }) => ({
-        suggestionId: suggestion.id,
-        label: suggestion.sourceLabel,
-        text: answer,
-      })),
-    openQuestions: answered
-      .filter(({ answer }) => isOpenAnswer(answer))
-      .map(({ suggestion }) => ({ suggestionId: suggestion.id, title: suggestion.title })),
-    remaining: suggestions.filter((suggestion) => resolutions[suggestion.id] === undefined).length,
+    precisions: [
+      ...answered
+        .filter(({ answer }) => !isOpenAnswer(answer))
+        .map(({ suggestion, answer }) => ({
+          id: suggestion.id,
+          label: suggestion.sourceLabel,
+          text: answer,
+        })),
+      ...answers.manualPrecisions,
+    ],
+    openQuestions: [
+      ...answered
+        .filter(({ answer }) => isOpenAnswer(answer))
+        .map(({ suggestion }) => ({ id: suggestion.id, title: suggestion.title })),
+      ...answers.manualQuestions.map((question) => ({ id: question.id, title: question.question })),
+    ],
+    remaining: suggestions.filter((suggestion) => answers.resolutions[suggestion.id] === undefined)
+      .length,
     validated: [
       ...base.sections.filter((section) => section.filled).map((section) => section.label),
       ...clarifiedIssues.map((issue) => `Terme « ${issue.term ?? ''} » précisé`),

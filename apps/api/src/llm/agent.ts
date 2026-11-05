@@ -15,6 +15,7 @@ export interface AgentOptions {
   root?: string;
   client?: MessagesClient;
   model?: string;
+  onToolCall?: (toolName: string) => void;
 }
 
 export interface AgentSession {
@@ -38,6 +39,7 @@ export async function createAgentSession(options: AgentOptions = {}): Promise<Ag
     context,
     maxToolCalls: LLM_LIMITS.maxToolCalls,
     maxResponseTokens: LLM_LIMITS.maxResponseTokens,
+    onToolCall: options.onToolCall,
   });
 
   return { conversation, readLog: context.readLog };

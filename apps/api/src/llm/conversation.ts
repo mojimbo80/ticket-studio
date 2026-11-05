@@ -17,6 +17,8 @@ export interface ConversationOptions {
   context: ToolContext;
   maxToolCalls: number;
   maxResponseTokens: number;
+  // Appelé avant chaque outil exécuté, pour informer le client de la progression.
+  onToolCall?: (toolName: string) => void;
 }
 
 export class ConversationLimitError extends Error {
@@ -107,6 +109,7 @@ export class Conversation {
       return toolResult(block.id, `Outil inconnu : ${block.name}`, true);
     }
 
+    this.options.onToolCall?.(tool.name);
     const startedAt = Date.now();
     const result = await tool.execute(block.input, this.options.context);
     // Nom de l'outil, statut et taille seulement : ni les paramètres ni le contenu lu ne sont journalisés.

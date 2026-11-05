@@ -99,7 +99,7 @@ export function TicketPanel({ ticket, view }: TicketPanelProps) {
         ) : (
           <ul className="flex list-disc flex-col gap-1.5 pl-5 text-sm">
             {view.precisions.map((precision) => (
-              <li key={precision.suggestionId}>
+              <li key={precision.id}>
                 <span className="font-medium">{precision.label}</span> : {precision.text}
               </li>
             ))}
@@ -109,7 +109,7 @@ export function TicketPanel({ ticket, view }: TicketPanelProps) {
 
       {view.openQuestions.map((question) => (
         <div
-          key={question.suggestionId}
+          key={question.id}
           className="flex items-start gap-2 rounded-[10px] border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800"
         >
           <CircleHelp className="mt-0.5 size-4 shrink-0" aria-hidden="true" />

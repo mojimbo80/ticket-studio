@@ -55,7 +55,7 @@ export function DiagnosticPanel({ view }: DiagnosticPanelProps) {
         ))}
         {view.openQuestions.map((question) => (
           <div
-            key={question.suggestionId}
+            key={question.id}
             className="flex flex-wrap items-center justify-between gap-3 rounded-[10px] border p-3 text-sm"
           >
             <span>Question ouverte : {question.title}</span>
@@ -115,7 +115,11 @@ function IssueRow({ issue, tone }: { issue: Issue; tone: 'blocker' | 'recommenda
           Répondre à la suggestion
         </Link>
       ) : (
-        <Link to="/saisie" className={actionClass}>
+        <Link
+          to="/atelier"
+          search={{ vue: 'conversation', demande: demandeFor(issue) }}
+          className={actionClass}
+        >
           {actionLabel(issue)}
         </Link>
       )}
@@ -123,13 +127,18 @@ function IssueRow({ issue, tone }: { issue: Issue; tone: 'blocker' | 'recommenda
   );
 }
 
+// Libellé du bouton : il ouvre la conversation avec une demande déjà rédigée.
 function actionLabel(issue: Issue): string {
   switch (issue.kind) {
     case 'section-vide':
-      return 'Compléter la section';
+      return 'Compléter avec l’agent';
     case 'absence-lien-maquette':
-      return 'Ajouter un lien';
+      return 'Ajouter un lien avec l’agent';
     default:
-      return 'Modifier la saisie';
+      return 'Ajouter avec l’agent';
   }
+}
+
+function demandeFor(issue: Issue): string {
+  return `Aide-moi à lever ce point du diagnostic : ${issue.message}`;
 }
