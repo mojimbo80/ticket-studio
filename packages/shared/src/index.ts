@@ -5,3 +5,4 @@ export * from './ticket';
 export * from './ticket-sections';
 export * from './diagnostic';
 export * from './analysis';
+export * from './suggestions';

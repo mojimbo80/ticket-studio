@@ -7,6 +7,7 @@ import { errorHandler, notFoundHandler } from './middleware/error-handler';
 import { analyzeRouter } from './routes/analyze';
 import { healthRouter } from './routes/health';
 import { projectRouter } from './routes/project';
+import { suggestionsRouter } from './routes/suggestions';
 
 export function createApp(): express.Express {
   const app = express();
@@ -19,6 +20,7 @@ export function createApp(): express.Express {
   app.use('/api', healthRouter);
   app.use('/api', projectRouter);
   app.use('/api', analyzeRouter);
+  app.use('/api', suggestionsRouter);
 
   app.use(notFoundHandler);
   app.use(errorHandler);
