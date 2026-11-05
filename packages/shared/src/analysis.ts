@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { type Diagnostic, DiagnosticSchema } from './diagnostic';
 
 // Étapes de l'analyse, dans l'ordre d'affichage. Les libellés sont ceux de la maquette.
 export const ANALYSIS_STEPS = [
@@ -16,27 +17,6 @@ export const AnalysisStepIdSchema = z.enum([
   'ecrans',
   'sections',
 ]);
-
-export const TicketSectionSchema = z.object({
-  key: z.enum(['title', 'context', 'description', 'criteria']),
-  label: z.string(),
-  filled: z.boolean(),
-});
-
-export const SuggestionSchema = z.object({
-  id: z.string(),
-  severity: z.enum(['bloquant', 'recommandation']),
-  text: z.string(),
-  source: z.string(),
-});
-
-export const DiagnosticSchema = z.object({
-  status: z.enum(['pas-pret', 'presque-pret', 'pret']),
-  blockers: z.number().int().min(0),
-  recommendations: z.number().int().min(0),
-  sections: z.array(TicketSectionSchema),
-  suggestions: z.array(SuggestionSchema),
-});
 
 const ProgressEventSchema = z.object({
   type: z.literal('progress'),
@@ -63,7 +43,5 @@ export const AnalysisEventSchema = z.discriminatedUnion('type', [
 ]);
 
 export type AnalysisStepId = z.infer<typeof AnalysisStepIdSchema>;
-export type TicketSection = z.infer<typeof TicketSectionSchema>;
-export type Suggestion = z.infer<typeof SuggestionSchema>;
-export type Diagnostic = z.infer<typeof DiagnosticSchema>;
 export type AnalysisEvent = z.infer<typeof AnalysisEventSchema>;
+export type AnalysisDiagnostic = Diagnostic;

@@ -1,4 +1,4 @@
-import type { TicketSection } from './analysis';
+import type { TicketSection } from './diagnostic';
 import type { Scenario, Ticket } from './ticket';
 
 // Les quatre sections de l'encart « Avant le diagnostic ».

@@ -11,7 +11,7 @@ import { createToolContext } from '../llm/tools/context';
 import type { ToolResult } from '../llm/tools/define-tool';
 import { repoTools } from '../llm/tools/repo-tools';
 import { getProjectContext } from '../project/project-context';
-import { buildPlaceholderDiagnostic } from './placeholder-diagnostic';
+import { buildDiagnostic } from '../diagnostic/build-diagnostic';
 import type { EmitEvent } from './sse';
 
 const MAX_SUMMARY_CHARS = 160;
@@ -24,7 +24,7 @@ export class AnalysisCancelledError extends Error {
   }
 }
 
-// Déroule les étapes de l'analyse en émettant leur progression. Les étapes 8 et 9 restent fictives.
+// Déroule les étapes de l'analyse en émettant leur progression, puis envoie le diagnostic.
 export async function runAnalysis(
   ticket: Ticket,
   emit: EmitEvent,
@@ -48,7 +48,7 @@ export async function runAnalysis(
     describeSections,
   );
 
-  emit({ type: 'done', diagnostic: buildPlaceholderDiagnostic(ticket) });
+  emit({ type: 'done', diagnostic: await buildDiagnostic(ticket) });
 }
 
 async function runStep<T>(
