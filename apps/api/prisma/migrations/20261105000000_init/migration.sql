@@ -1,0 +1,1 @@
+-- Migration initiale vide : le schéma métier arrivera dans les prochaines étapes.

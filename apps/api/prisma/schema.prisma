@@ -1,0 +1,21 @@
+// Schéma Prisma de Ticket Studio.
+// Les modèles métier seront ajoutés dans les prochaines étapes.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Index du projet analysé : une seule ligne, recalculée seulement quand le commit change.
+model ProjectIndex {
+  id            String   @id @default("default")
+  commitSha     String
+  readmeSummary String?
+  commits       Json
+  endpoints     Json
+  analyzedAt    DateTime @default(now())
+}

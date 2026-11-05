@@ -22,13 +22,13 @@ Hors périmètre du MVP : comptes utilisateurs, brouillons, multi-projet, intég
 - Elles sont la **référence visuelle et fonctionnelle** de chaque écran. Ce sont des spécifications, pas du code à copier.
 - L'interface se construit avec les **vrais composants shadcn/ui** (React + Tailwind), pas avec des imitations.
 
-| Fichier | Écran | Route |
-|---|---|---|
-| `01-saisie.dc.html` | Saisie du ticket | `/saisie` |
-| `02-analyse.dc.html` | Analyse du projet (progression) | `/analyse` |
-| `03-diagnostic.dc.html` | Diagnostic (statut + sections) | `/diagnostic` |
-| `04-atelier.dc.html` | Atelier (sidebar, conversation, suggestions, diagnostic détaillé, ticket) | `/atelier` |
-| `05-contexte.dc.html` | Contexte du projet (README, commits, endpoints) | `/contexte` |
+| Fichier                 | Écran                                                                     | Route         |
+| ----------------------- | ------------------------------------------------------------------------- | ------------- |
+| `01-saisie.dc.html`     | Saisie du ticket                                                          | `/saisie`     |
+| `02-analyse.dc.html`    | Analyse du projet (progression)                                           | `/analyse`    |
+| `03-diagnostic.dc.html` | Diagnostic (statut + sections)                                            | `/diagnostic` |
+| `04-atelier.dc.html`    | Atelier (sidebar, conversation, suggestions, diagnostic détaillé, ticket) | `/atelier`    |
+| `05-contexte.dc.html`   | Contexte du projet (README, commits, endpoints)                           | `/contexte`   |
 
 - Les fichiers `.dc.html` contiennent les styles en ligne et un script `class Component extends DCLogic` qui décrit l'état de l'écran et les règles d'affichage. C'est la meilleure source pour le comportement attendu.
 - `support.js` et `<helmet>` sont propres à l'outil de maquette : à ignorer.

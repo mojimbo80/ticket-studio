@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: ticket_studio
+      POSTGRES_PASSWORD: ticket_studio
+      POSTGRES_DB: ticket_studio
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ticket_studio -d ticket_studio']
+      interval: 2s
+      timeout: 3s
+      retries: 15
+
+volumes:
+  db-data:
