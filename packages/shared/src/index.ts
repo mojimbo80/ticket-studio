@@ -7,3 +7,4 @@ export * from './diagnostic';
 export * from './analysis';
 export * from './suggestions';
 export * from './chat';
+export * from './markdown';

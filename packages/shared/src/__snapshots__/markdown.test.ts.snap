@@ -1,0 +1,47 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ticketToMarkdown > omet les sections vides d’un ticket minimal 1`] = `
+"# Le total du panier ignore les remises
+
+Type : Bug
+"
+`;
+
+exports[`ticketToMarkdown > produit un ticket complet, avec précisions et questions ouvertes 1`] = `
+"# Permettre aux clients d’archiver leurs commandes terminées
+
+Type : User story
+
+## Contexte
+
+Les clients réguliers accumulent de nombreuses commandes.
+
+## Description
+
+En tant que client, je veux archiver mes commandes livrées ou annulées.
+
+## Critères d’acceptation
+
+### Scénario 1
+- Given une commande livrée
+- When le client clique sur « Archiver »
+- Then elle passe dans l’onglet « Archivées »
+
+### Scénario 2
+- Given une commande en cours de livraison
+- When le client affiche ses commandes
+- Then l’action « Archiver » n’est pas proposée
+
+## Précisions
+
+- Rendu : reprendre l’écran « Mes paniers sauvegardés »
+
+## Questions ouvertes
+
+- Une commande archivée puis remboursée doit-elle réapparaître ?
+
+## Liens
+
+- https://maquette.example/archives
+"
+`;

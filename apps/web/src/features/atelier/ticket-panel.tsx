@@ -1,10 +1,11 @@
 import { Link } from '@tanstack/react-router';
-import { type Ticket, type TicketType } from '@ticket-studio/shared';
+import { ticketToMarkdown, type Ticket, type TicketType } from '@ticket-studio/shared';
 import { CircleHelp } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import type { AtelierView } from './atelier-view';
+import { CopyMarkdownButton } from './copy-markdown-button';
 
 const TYPE_LABEL: Record<TicketType, string> = {
   story: 'User story',
@@ -33,6 +34,13 @@ interface TicketPanelProps {
 export function TicketPanel({ ticket, view }: TicketPanelProps) {
   const blockerWord = view.blockers > 1 ? 'bloquants' : 'bloquant';
   const recoWord = view.recommendations > 1 ? 'recommandations' : 'recommandation';
+  const markdown = ticketToMarkdown(ticket, {
+    precisions: view.precisions.map((precision) => ({
+      label: precision.label,
+      text: precision.text,
+    })),
+    openQuestions: view.openQuestions.map((question) => question.title),
+  });
 
   return (
     <section
@@ -51,13 +59,16 @@ export function TicketPanel({ ticket, view }: TicketPanelProps) {
         </div>
       </div>
 
-      <Link
-        to="/atelier"
-        search={{ vue: 'diagnostic' }}
-        className={cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'self-start')}
-      >
-        Voir le détail
-      </Link>
+      <div className="flex flex-wrap gap-2">
+        <Link
+          to="/atelier"
+          search={{ vue: 'diagnostic' }}
+          className={buttonVariants({ variant: 'outline', size: 'sm' })}
+        >
+          Voir le détail
+        </Link>
+        <CopyMarkdownButton markdown={markdown} />
+      </div>
 
       <div className="flex flex-col gap-2">
         <h2 id="ticket-panel-title" className="text-lg leading-snug font-semibold">
