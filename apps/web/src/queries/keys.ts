@@ -6,4 +6,6 @@ export const queryKeys = {
   },
   // Diagnostic issu de la dernière analyse : lu par Diagnostic et Atelier sans relancer l'analyse.
   analysis: () => ['analysis'] as const,
+  // Suggestions générées pour le ticket de la session : un seul appel à l'agent par analyse.
+  suggestions: () => ['suggestions'] as const,
 };

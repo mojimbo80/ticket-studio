@@ -20,6 +20,7 @@ export class ApiError extends Error {
 
 interface ApiFetchOptions {
   method?: 'GET' | 'POST';
+  body?: unknown;
 }
 
 // Seul point d'entrée HTTP du front : chaque réponse est parsée par le schéma Zod fourni.
@@ -28,7 +29,7 @@ export async function apiFetch<T>(
   schema: z.ZodType<T>,
   options: ApiFetchOptions = {},
 ): Promise<T> {
-  const response = await sendRequest(path, options.method ?? 'GET');
+  const response = await sendRequest(path, options.method ?? 'GET', options.body);
   const payload: unknown = await response.json().catch(() => null);
 
   if (!response.ok) {
@@ -42,11 +43,15 @@ export async function apiFetch<T>(
   return parsed.data;
 }
 
-async function sendRequest(path: string, method: 'GET' | 'POST'): Promise<Response> {
+async function sendRequest(path: string, method: 'GET' | 'POST', body: unknown): Promise<Response> {
+  const hasBody = body !== undefined;
   try {
     return await fetch(`${API_BASE_PATH}${path}`, {
       method,
-      headers: { Accept: 'application/json' },
+      headers: hasBody
+        ? { Accept: 'application/json', 'Content-Type': 'application/json' }
+        : { Accept: 'application/json' },
+      body: hasBody ? JSON.stringify(body) : undefined,
     });
   } catch {
     throw new ApiError('network', null, "L'API est injoignable. Vérifiez qu'elle est démarrée.");

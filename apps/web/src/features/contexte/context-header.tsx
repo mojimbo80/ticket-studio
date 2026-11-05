@@ -24,7 +24,11 @@ export function ContextHeader({ repo }: ContextHeaderProps) {
         </h1>
       </div>
       <div className="flex items-center gap-2">
-        <Link to="/atelier" className={buttonVariants({ variant: 'outline' })}>
+        <Link
+          to="/atelier"
+          search={{ vue: 'conversation' }}
+          className={buttonVariants({ variant: 'outline' })}
+        >
           <ArrowLeft aria-hidden="true" />
           Retour à l'atelier
         </Link>

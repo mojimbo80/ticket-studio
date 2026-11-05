@@ -51,7 +51,7 @@ function DiagnosticPage() {
           </p>
           <h1 className="text-2xl leading-tight font-semibold tracking-tight">{ticket.title}</h1>
         </div>
-        <Link to="/atelier" className={buttonVariants()}>
+        <Link to="/atelier" search={{ vue: 'conversation' }} className={buttonVariants()}>
           Continuer dans l’atelier
           <ArrowRight aria-hidden="true" />
         </Link>
