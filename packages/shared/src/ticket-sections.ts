@@ -1,10 +1,5 @@
-import type { Scenario, Ticket } from '@ticket-studio/shared';
-
-export interface TicketSection {
-  key: 'title' | 'context' | 'description' | 'criteria';
-  label: string;
-  filled: boolean;
-}
+import type { TicketSection } from './analysis';
+import type { Scenario, Ticket } from './ticket';
 
 // Les quatre sections de l'encart « Avant le diagnostic ».
 export function getTicketSections(ticket: Ticket): TicketSection[] {

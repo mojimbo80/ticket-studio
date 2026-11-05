@@ -4,4 +4,6 @@ export const queryKeys = {
   project: {
     context: () => ['project', 'context'] as const,
   },
+  // Diagnostic issu de la dernière analyse : lu par Diagnostic et Atelier sans relancer l'analyse.
+  analysis: () => ['analysis'] as const,
 };

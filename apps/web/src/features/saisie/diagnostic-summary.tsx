@@ -1,3 +1,4 @@
+import { getTicketSections } from '@ticket-studio/shared';
 import { ArrowRight, CheckCircle2, Circle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -5,7 +6,6 @@ import { Progress } from '@/components/ui/progress';
 import { cn } from '@/lib/utils';
 import { SAISIE_FORM_ID } from './saisie-form';
 import { hasTicketTitle, useTicketStore } from './ticket-store';
-import { getTicketSections } from './ticket-sections';
 
 // Encart « Avant le diagnostic » : progression des sections et lancement de l'analyse.
 export function DiagnosticSummary() {
