@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Saisie du ticket · shadcn</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#171717}a:hover{color:#0A0A0A}
+::placeholder{color:#737373}
+</style>
+</helmet>
+<div style="min-height: 1300px; background: #FFFFFF; font-family: Geist, system-ui, sans-serif; color: #0A0A0A; font-size: 14px; line-height: 1.5; display: flex; flex-direction: column">
+
+<header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; padding: 8px 24px; box-sizing: border-box; border-bottom: 1px solid #E5E5E5">
+<div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap">
+<div style="display: flex; align-items: center; gap: 8px">
+<div style="width: 28px; height: 28px; border-radius: 8px; background: #171717; display: flex; align-items: center; justify-content: center">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FAFAFA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h10M4 17h6"></path><path d="m16 16 2 2 4-4"></path></svg>
+</div>
+<span style="font-weight: 600; font-size: 15px">Ticket Studio</span>
+</div>
+<span aria-hidden="true" style="width: 1px; height: 16px; background: #E5E5E5"></span>
+<nav aria-label="Fil d'Ariane">
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; align-items: center; gap: 6px; font-size: 14px; color: #737373">
+<li aria-current="page" style="color: #0A0A0A">Saisie</li>
+<li aria-hidden="true" style="display: flex"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></li>
+<li>Diagnostic</li>
+<li aria-hidden="true" style="display: flex"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></li>
+<li>Atelier</li>
+</ol>
+</nav>
+</div>
+<span style="display: inline-flex; align-items: center; gap: 6px; padding: 2px 8px; border: 1px solid #E5E5E5; border-radius: 6px; font-size: 12px; font-weight: 500">
+<span style="width: 6px; height: 6px; border-radius: 50%; background: #16A34A"></span>
+<span style="font-family: 'Geist Mono', monospace">shop-api</span>
+<span style="color: #737373">main</span>
+</span>
+</header>
+
+<main style="max-width: 1120px; width: 100%; margin: 0 auto; padding: 40px 24px 64px; box-sizing: border-box; display: flex; flex-direction: column; gap: 28px">
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h1 style="margin: 0; font-size: 30px; font-weight: 600; letter-spacing: -0.025em; line-height: 1.2">Nouveau ticket</h1>
+<p style="margin: 0; color: #737373">Seul le titre est obligatoire. Plus tu remplis, plus le diagnostic sera précis.</p>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+
+<form style="flex: 999 1 620px; min-width: 0; display: flex; flex-direction: column; gap: 24px; padding: 24px; border: 1px solid #E5E5E5; border-radius: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.05)">
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span id="type-l" style="font-size: 14px; font-weight: 500">Type de ticket</span>
+<div role="group" aria-labelledby="type-l" style="display: inline-flex; align-self: flex-start; border: 1px solid #E5E5E5; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.05)">
+<sc-for list="{{types}}" as="t" hint-placeholder-count="3">
+<button type="button" aria-pressed="{{t.pressed}}" onClick="{{t.pick}}" style="{{t.style}}">{{t.label}}</button>
+</sc-for>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<label for="s-title" style="font-size: 14px; font-weight: 500">Titre <span style="color: #DC2626">*</span></label>
+<input id="s-title" type="text" value="{{title}}" onChange="{{onTitle}}" aria-required="true" aria-invalid="{{titleInvalid}}" placeholder="Ex. : Permettre aux clients d'archiver leurs commandes terminées" style="{{titleStyle}}">
+<sc-if value="{{titleEmpty}}" hint-placeholder-val="{{ false }}">
+<p style="margin: 0; font-size: 14px; color: #DC2626">Le titre est nécessaire pour lancer le diagnostic.</p>
+</sc-if>
+<p style="margin: 0; font-size: 14px; color: #737373">Une phrase claire, du point de vue de l'utilisateur.</p>
+</div>
+
+<div style="height: 1px; background: #E5E5E5"></div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<label for="s-ctx" style="font-size: 14px; font-weight: 500">Contexte</label>
+<textarea id="s-ctx" rows="3" placeholder="Quel problème rencontrent les utilisateurs ? D'où vient la demande ?" style="min-height: 72px; resize: vertical; padding: 8px 12px; border: 1px solid #E5E5E5; border-radius: 8px; font: inherit; color: #0A0A0A; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,0.05)"></textarea>
+<p style="margin: 0; font-size: 14px; color: #737373">Le pourquoi : le problème et ce qu'on y gagne.</p>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<label for="s-desc" style="font-size: 14px; font-weight: 500">Description</label>
+<textarea id="s-desc" rows="3" placeholder="En tant que [utilisateur], je veux [action] afin de [bénéfice]." style="min-height: 72px; resize: vertical; padding: 8px 12px; border: 1px solid #E5E5E5; border-radius: 8px; font: inherit; color: #0A0A0A; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,0.05)"></textarea>
+<p style="margin: 0; font-size: 14px; color: #737373">Le quoi, sous forme de user story.</p>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 14px; font-weight: 500">Critères d'acceptation</span>
+<span style="font-size: 14px; color: #737373">Given / When / Then : un comportement vérifiable par scénario.</span>
+</div>
+<sc-for list="{{scenarios}}" as="sc" hint-placeholder-count="1">
+<fieldset style="margin: 0; padding: 16px; border: 1px solid #E5E5E5; border-radius: 10px; display: flex; flex-direction: column; gap: 10px">
+<legend style="padding: 0 6px; font-size: 12px; font-weight: 500; color: #737373">Scénario {{sc.n}}</legend>
+<label style="display: grid; grid-template-columns: 64px minmax(0, 1fr); align-items: center; gap: 12px">
+<span style="font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 500">Given</span>
+<input type="text" placeholder="La situation de départ" style="height: 36px; padding: 0 12px; border: 1px solid #E5E5E5; border-radius: 8px; font: inherit; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,0.05)">
+</label>
+<label style="display: grid; grid-template-columns: 64px minmax(0, 1fr); align-items: center; gap: 12px">
+<span style="font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 500">When</span>
+<input type="text" placeholder="L'action de l'utilisateur" style="height: 36px; padding: 0 12px; border: 1px solid #E5E5E5; border-radius: 8px; font: inherit; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,0.05)">
+</label>
+<label style="display: grid; grid-template-columns: 64px minmax(0, 1fr); align-items: center; gap: 12px">
+<span style="font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 500">Then</span>
+<input type="text" placeholder="Le résultat attendu" style="height: 36px; padding: 0 12px; border: 1px solid #E5E5E5; border-radius: 8px; font: inherit; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,0.05)">
+</label>
+</fieldset>
+</sc-for>
+<button type="button" onClick="{{addScenario}}" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 16px; border: 1px solid #E5E5E5; border-radius: 8px; background: #FFFFFF; font: inherit; font-weight: 500; color: #0A0A0A; box-shadow: 0 1px 2px rgba(0,0,0,0.05); cursor: pointer">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+Ajouter un scénario
+</button>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<label for="s-links" style="font-size: 14px; font-weight: 500">Liens</label>
+<input id="s-links" type="url" placeholder="https://… (maquette, ticket lié, document)" style="height: 36px; padding: 0 12px; border: 1px solid #E5E5E5; border-radius: 8px; font: inherit; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,0.05)">
+</div>
+</form>
+
+<aside style="flex: 1 1 300px; min-width: 0; position: sticky; top: 24px; display: flex; flex-direction: column; gap: 20px; padding: 24px; border: 1px solid #E5E5E5; border-radius: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.05)">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h2 style="margin: 0; font-size: 16px; font-weight: 600; line-height: 1">Avant le diagnostic</h2>
+<p style="margin: 0; font-size: 14px; color: #737373">L'agent proposera les sections vides.</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; font-size: 14px"><span style="color: #737373">Sections remplies</span><span style="font-weight: 500">{{filled}} / 4</span></div>
+<div style="height: 8px; border-radius: 999px; background: #E5E5E5; overflow: hidden"><div style="height: 100%; width: {{filledPct}}%; background: #171717"></div></div>
+</div>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 14px">
+<li style="display: flex; align-items: center; gap: 8px">
+<sc-if value="{{titleOk}}" hint-placeholder-val="{{ true }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></sc-if>
+<sc-if value="{{titleEmpty}}" hint-placeholder-val="{{ false }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle></svg></sc-if>
+Titre <span style="color: #737373">· obligatoire</span>
+</li>
+<li style="display: flex; align-items: center; gap: 8px; color: #737373"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A3A3A3" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle></svg>Contexte</li>
+<li style="display: flex; align-items: center; gap: 8px; color: #737373"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A3A3A3" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle></svg>Description</li>
+<li style="display: flex; align-items: center; gap: 8px; color: #737373"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A3A3A3" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle></svg>Critères d'acceptation</li>
+</ul>
+<sc-if value="{{titleOk}}" hint-placeholder-val="{{ true }}">
+<a href="02-analyse.dc.html" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 40px; border-radius: 8px; background: #171717; color: #FAFAFA; text-decoration: none; font-weight: 500">
+Lancer le diagnostic
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+</a>
+</sc-if>
+<sc-if value="{{titleEmpty}}" hint-placeholder-val="{{ false }}">
+<button type="button" disabled style="height: 40px; border: 0; border-radius: 8px; background: #171717; color: #FAFAFA; font: inherit; font-weight: 500; opacity: 0.5; cursor: not-allowed">Lancer le diagnostic</button>
+</sc-if>
+</aside>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1300}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { title: 'Permettre aux clients d’archiver leurs commandes terminées', type: 'story', scenarios: 1 };
+}
+renderVals() {
+const s = this.state;
+const empty = s.title.trim().length === 0;
+const base = 'height: 36px; padding: 0 14px; border: 0; font: inherit; font-size: 14px; font-weight: 500; cursor: pointer; ';
+const types = [
+{ id: 'story', label: 'User story' },
+{ id: 'bug', label: 'Bug' },
+{ id: 'tech', label: 'Technique' }
+].map((t, i) => ({
+label: t.label,
+pressed: s.type === t.id ? 'true' : 'false',
+style: base + (i > 0 ? 'border-left: 1px solid #E5E5E5; ' : '') + (s.type === t.id ? 'background: #F5F5F5; color: #0A0A0A' : 'background: #FFFFFF; color: #737373'),
+pick: () => this.setState({ type: t.id })
+}));
+const scenarios = [];
+for (let i = 1; i <= s.scenarios; i++) scenarios.push({ n: i });
+const filled = empty ? 0 : 1;
+return {
+types: types,
+title: s.title,
+onTitle: (e) => this.setState({ title: e.target.value }),
+titleEmpty: empty,
+titleOk: !empty,
+titleInvalid: empty ? 'true' : 'false',
+titleStyle: 'height: 40px; padding: 0 12px; border-radius: 8px; font: inherit; font-size: 15px; color: #0A0A0A; background: #FFFFFF; box-shadow: ' + (empty ? '0 0 0 3px rgba(220,38,38,0.2); border: 1px solid #DC2626' : '0 1px 2px rgba(0,0,0,0.05); border: 1px solid #E5E5E5'),
+filled: filled,
+filledPct: filled * 25,
+scenarios: scenarios,
+addScenario: () => this.setState({ scenarios: s.scenarios + 1 })
+};
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Diagnostic du ticket · shadcn</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#171717}a:hover{color:#0A0A0A}
+</style>
+</helmet>
+<div style="min-height: 1500px; background: #FFFFFF; font-family: Geist, system-ui, sans-serif; color: #0A0A0A; font-size: 14px; line-height: 1.5; display: flex; flex-direction: column">
+
+<header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; padding: 8px 24px; box-sizing: border-box; border-bottom: 1px solid #E5E5E5">
+<div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap">
+<div style="display: flex; align-items: center; gap: 8px">
+<div style="width: 28px; height: 28px; border-radius: 8px; background: #171717; display: flex; align-items: center; justify-content: center">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FAFAFA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h10M4 17h6"></path><path d="m16 16 2 2 4-4"></path></svg>
+</div>
+<span style="font-weight: 600; font-size: 15px">Ticket Studio</span>
+</div>
+<span aria-hidden="true" style="width: 1px; height: 16px; background: #E5E5E5"></span>
+<nav aria-label="Fil d'Ariane">
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; align-items: center; gap: 6px; color: #737373">
+<li><a href="01-saisie.dc.html" style="color: #737373; text-decoration: none">Saisie</a></li>
+<li aria-hidden="true" style="display: flex"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></li>
+<li aria-current="page" style="color: #0A0A0A">Diagnostic</li>
+<li aria-hidden="true" style="display: flex"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></li>
+<li>Atelier</li>
+</ol>
+</nav>
+</div>
+<span style="display: inline-flex; align-items: center; gap: 6px; padding: 2px 8px; border: 1px solid #E5E5E5; border-radius: 6px; font-size: 12px; font-weight: 500">
+<span style="width: 6px; height: 6px; border-radius: 50%; background: #16A34A"></span>
+<span style="font-family: 'Geist Mono', monospace">shop-api</span>
+<span style="color: #737373">main</span>
+</span>
+</header>
+
+<main style="max-width: 880px; width: 100%; margin: 0 auto; padding: 40px 24px 64px; box-sizing: border-box; display: flex; flex-direction: column; gap: 24px">
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px">
+<div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<p style="margin: 0; color: #737373">Diagnostic · <a href="01-saisie.dc.html" style="text-underline-offset: 4px">modifier la saisie</a></p>
+<h1 style="margin: 0; font-size: 26px; font-weight: 600; letter-spacing: -0.025em; line-height: 1.25">Permettre aux clients d'archiver leurs commandes terminées</h1>
+</div>
+<a href="04-atelier.dc.html" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 20px; border-radius: 8px; background: #171717; color: #FAFAFA; text-decoration: none; font-weight: 500">
+Continuer dans l'atelier
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+</a>
+</div>
+
+<section style="display: flex; flex-direction: column; gap: 16px; padding: 24px; border: 1px solid {{statusBorder}}; border-radius: 14px; background: {{statusBg}}">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<div style="display: flex; align-items: center; gap: 10px; color: {{statusFg}}">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>
+<span style="font-size: 20px; font-weight: 600; letter-spacing: -0.01em">{{statusLabel}}</span>
+</div>
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<span style="display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 6px; background: #DC2626; color: #FFFFFF; font-size: 12px; font-weight: 500">{{blockerCount}} {{blockerWord}}</span>
+<span style="display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 6px; border: 1px solid #E5E5E5; background: #FFFFFF; color: #0A0A0A; font-size: 12px; font-weight: 500">{{recoCount}} {{recoWord}}</span>
+</div>
+</div>
+<p style="margin: 0; color: #404040">{{summary}}</p>
+<ol aria-label="Niveaux de préparation" style="margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{levels}}" as="lv" hint-placeholder-count="3">
+<li aria-current="{{lv.current}}" style="display: flex; flex-direction: column; gap: 6px">
+<span style="height: 6px; border-radius: 999px; background: {{lv.bar}}"></span>
+<span style="font-size: 12px; color: {{lv.fg}}; font-weight: {{lv.weight}}">{{lv.label}}</span>
+</li>
+</sc-for>
+</ol>
+</section>
+
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding-top: 8px">
+<h2 style="margin: 0; font-size: 18px; font-weight: 600; letter-spacing: -0.01em">Sections du ticket</h2>
+<span style="color: #737373">{{reqCount}} / 4 complétées</span>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 16px">
+<sc-for list="{{sections}}" as="sec" hint-placeholder-count="4">
+<article style="display: flex; flex-direction: column; gap: 16px; padding: 24px; border: 1px solid #E5E5E5; border-radius: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.05)">
+<div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h3 style="margin: 0; font-size: 16px; font-weight: 600; line-height: 1.2">{{sec.name}}</h3>
+<p style="margin: 0; font-size: 14px; color: #737373">{{sec.sub}}</p>
+</div>
+<span style="{{sec.badgeStyle}}">{{sec.badge}}</span>
+</div>
+
+<sc-if value="{{sec.isTitle}}" hint-placeholder-val="{{ false }}">
+<p style="margin: 0">Permettre aux clients d'archiver leurs commandes terminées</p>
+<div role="alert" style="display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 4px 12px; padding: 12px 16px; border: 1px solid #FECACA; border-radius: 10px; background: #FEF2F2; color: #B91C1C">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 2px" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>
+<span style="font-weight: 500">Bloquant : « terminées » n'est pas défini</span>
+<span style="grid-column: 2; color: #991B1B">Quelles commandes peut-on archiver ? Tu le préciseras dans l'atelier.</span>
+</div>
+</sc-if>
+
+<sc-if value="{{sec.hasProposal}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 16px; border-radius: 10px; background: #F5F5F5">
+<span style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; color: #737373">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 14.06 4 20M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"></path></svg>
+Proposition de l'agent
+</span>
+<sc-if value="{{sec.hasText}}" hint-placeholder-val="{{ true }}"><p style="margin: 0; color: #262626">{{sec.text}}</p></sc-if>
+<sc-if value="{{sec.isGwt}}" hint-placeholder-val="{{ false }}">
+<sc-for list="{{gwt}}" as="g" hint-placeholder-count="3">
+<div style="display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 2px 10px; padding: 10px 12px; background: #FFFFFF; border: 1px solid #E5E5E5; border-radius: 8px">
+<span style="font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 500">Given</span><span>{{g.given}}</span>
+<span style="font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 500">When</span><span>{{g.when}}</span>
+<span style="font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 500">Then</span><span>{{g.then}}</span>
+</div>
+</sc-for>
+</sc-if>
+<sc-if value="{{sec.hasWarn}}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size: 13px; color: #B45309">{{sec.warn}}</p></sc-if>
+</div>
+<sc-if value="{{sec.pending}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; gap: 8px">
+<button type="button" onClick="{{sec.accept}}" style="height: 36px; padding: 0 16px; border: 0; border-radius: 8px; background: #171717; color: #FAFAFA; font: inherit; font-weight: 500; cursor: pointer">{{sec.acceptLabel}}</button>
+<button type="button" style="height: 36px; padding: 0 16px; border: 1px solid #E5E5E5; border-radius: 8px; background: #FFFFFF; color: #0A0A0A; font: inherit; font-weight: 500; box-shadow: 0 1px 2px rgba(0,0,0,0.05); cursor: pointer">Modifier</button>
+</div>
+</sc-if>
+</sc-if>
+</article>
+</sc-for>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1500}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { ctx: false, desc: false, gwt: false };
+}
+renderVals() {
+const s = this.state;
+const req = [s.ctx, s.desc, s.gwt].filter(Boolean).length;
+const missing = 3 - req;
+const blockers = missing + 1;
+const recos = 2;
+const idx = missing > 0 ? 0 : 1;
+const tones = [
+{ bg: '#FEF2F2', border: '#FECACA', fg: '#B91C1C', label: 'Pas prêt' },
+{ bg: '#FFFBEB', border: '#FDE68A', fg: '#B45309', label: 'Presque prêt' },
+{ bg: '#F0FDF4', border: '#BBF7D0', fg: '#15803D', label: 'Prêt à développer' }
+];
+const summary = missing > 0
+? (missing > 1 ? missing + ' sections sont vides' : '1 section est vide') + ' et « terminées » reste à préciser. Accepte les propositions de l’agent ci-dessous.'
+: 'Toutes les sections sont remplies. Il reste un bloquant : préciser « terminées ». L’atelier t’aide à le lever.';
+const levels = tones.map((t, i) => ({
+label: t.label,
+current: i === idx ? 'step' : 'false',
+bar: i <= idx ? tones[idx].fg : '#E5E5E5',
+fg: i === idx ? tones[idx].fg : '#737373',
+weight: i === idx ? '600' : '400'
+}));
+const badge = 'padding: 2px 8px; border-radius: 6px; font-size: 12px; font-weight: 500; white-space: nowrap; ';
+const ok = (label) => ({ badge: label, badgeStyle: badge + 'border: 1px solid #BBF7D0; background: #F0FDF4; color: #15803D' });
+const ko = { badge: 'Vide · bloquant', badgeStyle: badge + 'border: 1px solid #DC2626; background: #DC2626; color: #FFFFFF' };
+const mk = (key, name, sub, text, extra) => {
+const done = s[key];
+return Object.assign({ name: name, sub: sub, text: text || '', hasText: !!text, isTitle: false, hasProposal: true, isGwt: false, hasWarn: false, warn: '',
+pending: !done, accept: () => this.setState({ [key]: true }), acceptLabel: 'Accepter' }, done ? ok('Complété') : ko, extra || {});
+};
+const sections = [
+Object.assign({ name: 'Titre', sub: 'Une phrase claire, du point de vue de l’utilisateur', isTitle: true, hasProposal: false, pending: false, hasText: false, isGwt: false, hasWarn: false, text: '', warn: '', acceptLabel: '' }, ok('Rempli')),
+mk('ctx', 'Contexte', 'Le pourquoi', 'Les clients réguliers accumulent de nombreuses commandes et leur historique devient difficile à lire. Le support reçoit des demandes pour masquer d’anciennes commandes.', { hasWarn: true, warn: 'À vérifier : l’agent ne connaît pas vos chiffres. Ajoute le volume de demandes au support si tu l’as.' }),
+mk('desc', 'Description', 'Le quoi', 'En tant que client, je veux archiver mes commandes terminées afin de garder un historique lisible. Je retrouve mes commandes archivées dans un onglet dédié et je peux les désarchiver.'),
+mk('gwt', 'Critères d’acceptation', 'Given / When / Then', '', { isGwt: true, acceptLabel: 'Accepter les 3 scénarios' })
+];
+return {
+statusLabel: tones[idx].label, statusBg: tones[idx].bg, statusBorder: tones[idx].border, statusFg: tones[idx].fg,
+blockerCount: blockers, blockerWord: blockers > 1 ? 'bloquants' : 'bloquant',
+recoCount: recos, recoWord: recos > 1 ? 'recommandations' : 'recommandation',
+levels: levels, summary: summary, reqCount: 1 + req,
+sections: sections,
+gwt: [
+{ given: 'une commande livrée', when: 'le client clique sur « Archiver »', then: 'elle passe de « Mes commandes » à l’onglet « Archivées »' },
+{ given: 'une commande en cours de livraison', when: 'le client affiche ses commandes', then: 'l’action « Archiver » n’est pas proposée' },
+{ given: 'une commande archivée', when: 'le client clique sur « Désarchiver »', then: 'elle revient dans « Mes commandes »' }
+]
+};
+}
+}
+</script>
+</body>
+</html>

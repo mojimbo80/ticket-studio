@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Atelier · shadcn</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#171717}a:hover{color:#0A0A0A}
+::placeholder{color:#737373}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+</style>
+</helmet>
+<div style="min-height: 1250px; background: #FFFFFF; font-family: Geist, system-ui, sans-serif; color: #0A0A0A; font-size: 14px; line-height: 1.5; display: flex; flex-direction: column">
+
+<header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; padding: 8px 24px; box-sizing: border-box; border-bottom: 1px solid #E5E5E5">
+<div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap">
+<div style="display: flex; align-items: center; gap: 8px">
+<div style="width: 28px; height: 28px; border-radius: 8px; background: #171717; display: flex; align-items: center; justify-content: center">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FAFAFA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h10M4 17h6"></path><path d="m16 16 2 2 4-4"></path></svg>
+</div>
+<span style="font-weight: 600; font-size: 15px">Ticket Studio</span>
+</div>
+<span aria-hidden="true" style="width: 1px; height: 16px; background: #E5E5E5"></span>
+<nav aria-label="Fil d'Ariane">
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; align-items: center; gap: 6px; color: #737373">
+<li><a href="01-saisie.dc.html" style="color: #737373; text-decoration: none">Saisie</a></li>
+<li aria-hidden="true" style="display: flex"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></li>
+<li><a href="03-diagnostic.dc.html" style="color: #737373; text-decoration: none">Diagnostic</a></li>
+<li aria-hidden="true" style="display: flex"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></li>
+<li aria-current="page" style="color: #0A0A0A">Atelier</li>
+</ol>
+</nav>
+</div>
+<a href="01-saisie.dc.html" style="display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 16px; border-radius: 8px; background: #171717; color: #FAFAFA; text-decoration: none; font-weight: 500">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+Nouveau ticket
+</a>
+</header>
+
+<div style="flex: 1; display: flex; flex-wrap: wrap; align-items: stretch">
+
+<aside style="flex: 0 1 256px; min-width: 0; box-sizing: border-box; display: flex; flex-direction: column; gap: 8px; padding: 12px 8px; background: #FAFAFA; border-right: 1px solid #E5E5E5">
+<nav aria-labelledby="g-atelier" style="display: flex; flex-direction: column; gap: 2px; padding: 8px">
+<span id="g-atelier" style="display: flex; align-items: center; height: 32px; padding: 0 8px; font-size: 12px; font-weight: 500; color: #737373">Atelier</span>
+<sc-for list="{{tabs}}" as="tb" hint-placeholder-count="3">
+<button type="button" aria-current="{{tb.current}}" onClick="{{tb.pick}}" style="{{tb.style}}">
+<span style="display: flex; align-items: center; gap: 8px">
+<sc-if value="{{tb.isChat}}" hint-placeholder-val="{{ true }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></sc-if>
+<sc-if value="{{tb.isSug}}" hint-placeholder-val="{{ false }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg></sc-if>
+<sc-if value="{{tb.isDiag}}" hint-placeholder-val="{{ false }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v16a2 2 0 0 0 2 2h16"></path><path d="M18 17V9"></path><path d="M13 17V5"></path><path d="M8 17v-3"></path></svg></sc-if>
+{{tb.label}}
+</span>
+<sc-if value="{{tb.hasBadge}}" hint-placeholder-val="{{ false }}"><span style="{{tb.badgeStyle}}">{{tb.badge}}</span></sc-if>
+</button>
+</sc-for>
+</nav>
+<div style="height: 1px; margin: 0 16px; background: #E5E5E5"></div>
+<section aria-labelledby="g-projet" style="display: flex; flex-direction: column; gap: 8px; padding: 8px">
+<span id="g-projet" style="display: flex; align-items: center; height: 32px; padding: 0 8px; font-size: 12px; font-weight: 500; color: #737373">Projet</span>
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 12px; background: #FFFFFF; border: 1px solid #E5E5E5; border-radius: 10px; box-shadow: 0 1px 2px rgba(0,0,0,0.05)">
+<span style="display: flex; align-items: center; gap: 8px">
+<span style="width: 6px; height: 6px; border-radius: 50%; background: #16A34A"></span>
+<span style="font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 500">shop-api</span>
+<span style="font-size: 12px; color: #737373">main</span>
+</span>
+<p style="margin: 0; font-size: 13px; color: #737373">Boutique en ligne : site web, app mobile et back-office du support.</p>
+<a href="05-contexte.dc.html" style="display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 32px; border: 1px solid #E5E5E5; border-radius: 8px; background: #FFFFFF; color: #0A0A0A; text-decoration: none; font-size: 13px; font-weight: 500">
+Voir le contexte
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+</a>
+</div>
+</section>
+</aside>
+
+<div style="flex: 999 1 640px; min-width: 0; display: flex; flex-wrap: wrap; gap: 24px; padding: 24px; box-sizing: border-box; align-items: stretch">
+
+<main style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; border: 1px solid #E5E5E5; border-radius: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); overflow: hidden">
+<div style="display: flex; flex-direction: column; gap: 4px; padding: 20px 24px; border-bottom: 1px solid #E5E5E5">
+<h1 style="margin: 0; font-size: 16px; font-weight: 600; line-height: 1.2">{{panelTitle}}</h1>
+<p style="margin: 0; font-size: 14px; color: #737373">{{panelSub}}</p>
+</div>
+
+<sc-if value="{{showChat}}" hint-placeholder-val="{{ true }}">
+<div style="flex: 1; display: flex; flex-direction: column">
+<div style="flex: 1; display: flex; flex-direction: column; gap: 20px; padding: 24px">
+<div style="align-self: flex-end; max-width: 80%; padding: 8px 12px; border-radius: 10px; background: #171717; color: #FAFAFA">J'ai validé le diagnostic. On peut finaliser ?</div>
+<div style="display: flex; gap: 12px; max-width: 92%">
+<span style="flex: none; width: 32px; height: 32px; border-radius: 50%; background: #F5F5F5; border: 1px solid #E5E5E5; display: flex; align-items: center; justify-content: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#171717" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 10px; min-width: 0">
+<p style="margin: 0">Presque. Tu as choisi de reprendre le rendu de « Mes paniers sauvegardés ». Sur cet écran, un élément masqué peut être supprimé définitivement depuis l'onglet dédié.</p>
+<div style="display: flex; align-items: center; gap: 10px; padding: 8px 12px; border: 1px solid #E5E5E5; border-radius: 8px">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path><path d="M9 21V9"></path></svg>
+<span style="font-size: 13px"><span style="font-weight: 500">Repéré dans</span> <span style="color: #737373">· écran « Mes paniers sauvegardés »</span></span>
+</div>
+<p style="margin: 0">Est-ce qu'un client doit pouvoir <strong style="font-weight: 600">supprimer</strong> une commande archivée, ou seulement la désarchiver ?</p>
+</div>
+</div>
+<div style="align-self: flex-end; max-width: 80%; padding: 8px 12px; border-radius: 10px; background: #171717; color: #FAFAFA">Seulement désarchiver. On garde les commandes pour la comptabilité.</div>
+<div style="display: flex; gap: 12px; max-width: 92%">
+<span style="flex: none; width: 32px; height: 32px; border-radius: 50%; background: #F5F5F5; border: 1px solid #E5E5E5; display: flex; align-items: center; justify-content: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#171717" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 10px; min-width: 0">
+<p style="margin: 0">Noté. Je l'ajoute comme écart par rapport à l'écran de référence, pour que l'équipe ne reprenne pas le bouton « Supprimer ».</p>
+<p style="margin: 0; color: #525252">Le ticket est prêt à développer. Il reste 1 suggestion et quelques recommandations pour l'améliorer.</p>
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<button type="button" onClick="{{goSug}}" style="height: 32px; padding: 0 12px; border: 1px solid #E5E5E5; border-radius: 8px; background: #FFFFFF; color: #0A0A0A; font: inherit; font-size: 13px; font-weight: 500; box-shadow: 0 1px 2px rgba(0,0,0,0.05); cursor: pointer">Voir les suggestions</button>
+<button type="button" onClick="{{goDiag}}" style="height: 32px; padding: 0 12px; border: 1px solid #E5E5E5; border-radius: 8px; background: #FFFFFF; color: #0A0A0A; font: inherit; font-size: 13px; font-weight: 500; box-shadow: 0 1px 2px rgba(0,0,0,0.05); cursor: pointer">Voir le diagnostic détaillé</button>
+</div>
+</div>
+</div>
+</div>
+<form style="display: flex; gap: 8px; align-items: flex-end; padding: 16px 24px; border-top: 1px solid #E5E5E5">
+<label for="sc-msg" class="sr-only">Message à l'agent</label>
+<textarea id="sc-msg" rows="2" placeholder="Demande une modification : « ajoute un cas d'erreur »…" style="flex: 1; min-width: 0; min-height: 64px; resize: none; padding: 8px 12px; border: 1px solid #E5E5E5; border-radius: 8px; font: inherit; color: #0A0A0A; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,0.05)"></textarea>
+<button type="submit" aria-label="Envoyer" style="flex: none; width: 40px; height: 40px; border: 0; border-radius: 8px; background: #171717; color: #FAFAFA; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"></path><path d="M22 2 11 13"></path></svg>
+</button>
+</form>
+</div>
+</sc-if>
+
+<sc-if value="{{showSug}}" hint-placeholder-val="{{ false }}">
+<div style="flex: 1; display: flex; flex-direction: column; gap: 12px; padding: 24px">
+<sc-for list="{{suggestions}}" as="sg" hint-placeholder-count="6">
+<article style="{{sg.cardStyle}}">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap">
+<span style="{{sg.tagStyle}}">{{sg.kind}}</span>
+<span style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #737373">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+{{sg.source}}
+</span>
+</div>
+<p style="margin: 0; font-weight: 600">{{sg.title}}</p>
+<sc-if value="{{sg.open}}" hint-placeholder-val="{{ true }}">
+<p style="margin: 0; color: #525252">{{sg.body}}</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{sg.choices}}" as="ch" hint-placeholder-count="2">
+<button type="button" onClick="{{ch.pick}}" style="height: 32px; padding: 0 12px; border: 1px solid #E5E5E5; border-radius: 8px; background: #FFFFFF; color: #0A0A0A; font: inherit; font-size: 13px; font-weight: 500; box-shadow: 0 1px 2px rgba(0,0,0,0.05); cursor: pointer">{{ch.label}}</button>
+</sc-for>
+<button type="button" onClick="{{sg.skip}}" style="height: 32px; padding: 0 12px; border: 0; border-radius: 8px; background: transparent; color: #737373; font: inherit; font-size: 13px; font-weight: 500; cursor: pointer">Ignorer</button>
+</div>
+</sc-if>
+<sc-if value="{{sg.answered}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px">
+<span style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: #15803D; font-weight: 500"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>{{sg.answer}}</span>
+<button type="button" onClick="{{sg.reopen}}" style="height: 28px; padding: 0 10px; border: 0; border-radius: 6px; background: transparent; color: #0A0A0A; font: inherit; font-size: 13px; font-weight: 500; text-decoration: underline; text-underline-offset: 4px; cursor: pointer">Modifier</button>
+</div>
+</sc-if>
+<sc-if value="{{sg.skipped}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<span style="font-size: 13px; color: #737373">Ignorée</span>
+<button type="button" onClick="{{sg.reopen}}" style="height: 28px; padding: 0 10px; border: 0; border-radius: 6px; background: transparent; color: #0A0A0A; font: inherit; font-size: 13px; font-weight: 500; text-decoration: underline; text-underline-offset: 4px; cursor: pointer">Rouvrir</button>
+</div>
+</sc-if>
+</article>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{showDiag}}" hint-placeholder-val="{{ false }}">
+<div style="flex: 1; display: flex; flex-direction: column; gap: 24px; padding: 24px">
+<div role="status" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border: 1px solid {{statusBorder}}; border-radius: 10px; background: {{statusBg}}; color: {{statusFg}}">
+<span style="display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 600">
+<sc-if value="{{statusReady}}" hint-placeholder-val="{{ true }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></sc-if>
+<sc-if value="{{statusNotReady}}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg></sc-if>
+{{statusLabel}}
+</span>
+<span style="font-size: 13px; font-weight: 500">{{countsLabel}}</span>
+</div>
+
+<section style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 14px; font-weight: 600">Bloquants <span style="color: #737373; font-weight: 400">· {{blockerCount}}</span></h2>
+<sc-if value="{{hasBlockers}}" hint-placeholder-val="{{ false }}">
+<sc-for list="{{blockers}}" as="it" hint-placeholder-count="1">
+<div role="alert" style="display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 4px 12px; padding: 12px 16px; border: 1px solid #FECACA; border-radius: 10px; background: #FEF2F2; color: #B91C1C">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 2px" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg>
+<span style="font-weight: 500">{{it.name}}</span>
+<span style="grid-column: 2; color: #991B1B">{{it.comment}}</span>
+<button type="button" onClick="{{it.go}}" style="grid-column: 2; justify-self: start; margin-top: 6px; height: 32px; padding: 0 12px; border: 0; border-radius: 8px; background: #DC2626; color: #FFFFFF; font: inherit; font-size: 13px; font-weight: 500; cursor: pointer">{{it.action}}</button>
+</div>
+</sc-for>
+</sc-if>
+<sc-if value="{{noBlockers}}" hint-placeholder-val="{{ true }}">
+<p style="margin: 0; padding: 12px 16px; border: 1px solid #E5E5E5; border-radius: 10px; color: #525252">Aucun bloquant : l'équipe peut démarrer.</p>
+</sc-if>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 14px; font-weight: 600">Recommandations <span style="color: #737373; font-weight: 400">· {{recoCount}}</span></h2>
+<sc-for list="{{recos}}" as="it" hint-placeholder-count="3">
+<div style="display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 4px 12px; padding: 12px 16px; border: 1px solid #E5E5E5; border-radius: 10px">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 2px" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>
+<span style="font-weight: 500">{{it.name}}</span>
+<span style="grid-column: 2; color: #737373">{{it.comment}}</span>
+<button type="button" onClick="{{it.go}}" style="grid-column: 2; justify-self: start; margin-top: 6px; height: 32px; padding: 0 12px; border: 1px solid #E5E5E5; border-radius: 8px; background: #FFFFFF; color: #0A0A0A; font: inherit; font-size: 13px; font-weight: 500; box-shadow: 0 1px 2px rgba(0,0,0,0.05); cursor: pointer">{{it.action}}</button>
+</div>
+</sc-for>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 14px; font-weight: 600">Validés <span style="color: #737373; font-weight: 400">· {{validCount}}</span></h2>
+<ul style="margin: 0; padding: 0; list-style: none; border: 1px solid #E5E5E5; border-radius: 10px; overflow: hidden">
+<sc-for list="{{valid}}" as="it" hint-placeholder-count="6">
+<li style="display: flex; gap: 10px; align-items: flex-start; padding: 10px 16px; border-bottom: 1px solid #F0F0F0">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex: none; margin-top: 2px" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+<span><span style="font-weight: 500">{{it.name}}</span> <span style="color: #737373">· {{it.comment}}</span></span>
+</li>
+</sc-for>
+</ul>
+</section>
+</div>
+</sc-if>
+</main>
+
+<section aria-labelledby="t-title" style="flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; border: 1px solid #E5E5E5; border-radius: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); overflow: hidden">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 20px 24px; border-bottom: 1px solid #E5E5E5">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 16px; font-weight: 600; line-height: 1.2">Ticket</span>
+<span style="font-size: 14px; color: #737373">Prêt à coller dans Jira, Trello ou Monday</span>
+</div>
+<button type="button" style="display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 16px; border: 0; border-radius: 8px; background: #171717; color: #FAFAFA; font: inherit; font-weight: 500; cursor: pointer">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+Copier en Markdown
+</button>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding: 12px 24px; background: #FAFAFA; border-bottom: 1px solid #E5E5E5">
+<span style="display: inline-flex; align-items: center; gap: 6px; padding: 2px 8px; border-radius: 6px; border: 1px solid {{statusBorder}}; background: {{statusBg}}; color: {{statusFg}}; font-size: 12px; font-weight: 500">
+<sc-if value="{{statusReady}}" hint-placeholder-val="{{ true }}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></sc-if>
+{{statusLabel}}
+</span>
+<span style="flex: 1 1 160px; font-size: 13px; color: #737373">{{countsLabel}}</span>
+<button type="button" onClick="{{goDiag}}" style="height: 32px; padding: 0 12px; border: 0; border-radius: 8px; background: transparent; color: #0A0A0A; font: inherit; font-size: 13px; font-weight: 500; cursor: pointer">Voir le détail</button>
+</div>
+
+<article style="padding: 24px; display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h2 id="t-title" style="margin: 0; font-size: 20px; font-weight: 600; line-height: 1.3; letter-spacing: -0.015em">Permettre aux clients d'archiver leurs commandes terminées</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<span style="padding: 2px 8px; border-radius: 6px; background: #171717; color: #FAFAFA; font-size: 12px; font-weight: 500">User story</span>
+<span style="padding: 2px 8px; border-radius: 6px; background: #F5F5F5; color: #171717; font-size: 12px; font-weight: 500">Web</span>
+<span style="padding: 2px 8px; border-radius: 6px; background: #F5F5F5; color: #171717; font-size: 12px; font-weight: 500">Back-office support</span>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h3 style="margin: 0; font-size: 14px; font-weight: 600">Contexte</h3>
+<p style="margin: 0; color: #404040">Les clients réguliers accumulent de nombreuses commandes et leur historique devient difficile à lire. Le support reçoit des demandes pour masquer d'anciennes commandes.</p>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h3 style="margin: 0; font-size: 14px; font-weight: 600">Description</h3>
+<p style="margin: 0; color: #404040">En tant que client, je veux archiver mes commandes livrées ou annulées afin de garder un historique lisible. Je les retrouve dans un onglet « Archivées » et je peux les désarchiver.</p>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h3 style="margin: 0; font-size: 14px; font-weight: 600">Critères d'acceptation</h3>
+<sc-for list="{{gwt}}" as="g" hint-placeholder-count="3">
+<div style="display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 2px 10px; padding: 10px 12px; border: 1px solid #E5E5E5; border-radius: 8px; background: #FAFAFA">
+<span style="font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 500">Given</span><span>{{g.given}}</span>
+<span style="font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 500">When</span><span>{{g.when}}</span>
+<span style="font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 500">Then</span><span>{{g.then}}</span>
+</div>
+</sc-for>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h3 style="margin: 0; font-size: 14px; font-weight: 600">Précisions</h3>
+<ul style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; color: #404040">
+<li><span style="font-weight: 500; color: #0A0A0A">Rendu</span> : reprendre l'écran « Mes paniers sauvegardés » (onglet dédié, même bouton), sans l'option « Supprimer ».</li>
+<li><span style="font-weight: 500; color: #0A0A0A">Service client</span> : les commandes archivées restent visibles dans le back-office.</li>
+<li><span style="font-weight: 500; color: #0A0A0A">Périmètre</span> : web uniquement. L'app mobile fera l'objet d'un ticket séparé.</li>
+<li><span style="font-weight: 500; color: #0A0A0A">E-mails de suivi</span> : le lien ouvre la commande normalement, même archivée.</li>
+<sc-if value="{{refundDecided}}" hint-placeholder-val="{{ false }}"><li><span style="font-weight: 500; color: #0A0A0A">Remboursement</span> : {{refundText}}</li></sc-if>
+</ul>
+</div>
+
+<sc-if value="{{refundOpen}}" hint-placeholder-val="{{ true }}">
+<div style="display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 4px 12px; padding: 12px 16px; border: 1px solid #FDE68A; border-radius: 10px; background: #FFFBEB; color: #92400E">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 2px" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>
+<span style="font-weight: 500">Question ouverte</span>
+<span style="grid-column: 2">Une commande archivée puis remboursée doit-elle réapparaître dans « Mes commandes » ?</span>
+</div>
+</sc-if>
+</article>
+</section>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1250}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = {
+tab: 'chat',
+answers: { 0: 'Oui, même rendu', 1: 'Livrées et annulées', 2: 'Oui, toujours visibles', 3: 'Web seulement', 5: 'La commande s’affiche normalement' }
+};
+}
+renderVals() {
+const s = this.state;
+const goChat = () => this.setState({ tab: 'chat' });
+const goSug = () => this.setState({ tab: 'sug' });
+const goDiag = () => this.setState({ tab: 'diag' });
+const badge = 'padding: 2px 8px; border-radius: 6px; font-size: 12px; font-weight: 500; ';
+const tagStyles = {
+reuse: badge + 'background: #171717; color: #FAFAFA',
+clarify: badge + 'background: #F5F5F5; color: #171717',
+forgot: badge + 'border: 1px solid #E5E5E5; color: #0A0A0A',
+edge: badge + 'border: 1px solid #FDE68A; background: #FFFBEB; color: #92400E'
+};
+const data = [
+{ kind: 'Réutiliser l’existant', tag: 'reuse', source: 'Écran « Mes paniers sauvegardés »', title: 'Un écran similaire existe déjà',
+body: 'L’écran « Mes paniers sauvegardés » permet déjà de masquer un élément et de le retrouver dans un onglet dédié. Veux-tu le même rendu et le même comportement pour les commandes ?',
+choices: ['Oui, même rendu', 'Non, rendu différent'] },
+{ kind: 'À préciser', tag: 'clarify', source: 'Cycle de vie des commandes', title: 'Quelles commandes sont « terminées » ?',
+body: 'Une commande passe par 5 étapes : en attente, payée, expédiée, livrée, annulée. Lesquelles peut-on archiver ?',
+choices: ['Livrées et annulées', 'Livrées uniquement', 'Toutes'] },
+{ kind: 'Point oublié', tag: 'forgot', source: 'Back-office du support', title: 'Et pour le service client ?',
+body: 'Le support consulte les commandes d’un client dans le back-office. Les commandes archivées doivent-elles y rester visibles ?',
+choices: ['Oui, toujours visibles', 'Non, masquées aussi'] },
+{ kind: 'Point oublié', tag: 'forgot', source: 'Application mobile', title: 'Et sur l’application mobile ?',
+body: 'L’historique des commandes est aussi affiché dans l’app mobile. L’archivage fait-il partie de ce ticket ?',
+choices: ['Oui, web et mobile', 'Web seulement'] },
+{ kind: 'Cas limite', tag: 'edge', source: 'Évolution récente « Remboursements »', title: 'Remboursement d’une commande archivée',
+body: 'Les remboursements ont été ajoutés récemment. Si une commande archivée est remboursée, doit-elle réapparaître dans « Mes commandes » ?',
+choices: ['Oui, elle réapparaît', 'Non, elle reste archivée', 'Laisser en question ouverte'] },
+{ kind: 'Point oublié', tag: 'forgot', source: 'E-mails de suivi de commande', title: 'Liens dans les e-mails',
+body: 'Les e-mails de suivi contiennent un lien vers la commande. Que voit le client s’il ouvre une commande archivée ?',
+choices: ['La commande s’affiche normalement', 'Laisser en question ouverte'] }
+];
+const setAnswer = (i, v) => () => this.setState({ answers: Object.assign({}, s.answers, { [i]: v }) });
+const reopen = (i) => () => { const a = Object.assign({}, s.answers); delete a[i]; this.setState({ answers: a }); };
+const suggestions = data.map((d, i) => {
+const a = s.answers[i];
+const open = a === undefined;
+return {
+kind: d.kind, title: d.title, body: d.body, source: d.source, tagStyle: tagStyles[d.tag],
+open: open, answered: a !== undefined && a !== null, skipped: a === null, answer: a || '',
+choices: d.choices.map((c) => ({ label: c, pick: setAnswer(i, c) })),
+skip: setAnswer(i, null), reopen: reopen(i),
+cardStyle: 'display: flex; flex-direction: column; gap: 10px; padding: 16px; border-radius: 12px; background: #FFFFFF; ' + (open ? 'border: 1px solid #171717; box-shadow: 0 1px 3px rgba(0,0,0,0.1)' : 'border: 1px solid #E5E5E5')
+};
+});
+const pending = data.filter((d, i) => s.answers[i] === undefined).length;
+const termOk = s.answers[1] != null;
+const refundAns = s.answers[4];
+const refundDecided = refundAns != null && refundAns !== 'Laisser en question ouverte';
+const otherPending = [0, 2, 3, 5].filter((i) => s.answers[i] === undefined).length;
+const blockers = [];
+if (!termOk) blockers.push({ name: '« Terminées » n’est pas défini', comment: 'Le développeur ne sait pas quelles commandes peuvent être archivées.', action: 'Répondre à la suggestion', go: goSug });
+const recos = [];
+recos.push({ name: 'Aucun cas d’erreur', comment: 'Aucun scénario ne décrit ce qui se passe si l’archivage échoue.', action: 'Ajouter un cas d’erreur', go: goChat });
+if (!refundDecided) recos.push({ name: '1 question ouverte', comment: 'Le remboursement d’une commande archivée n’est pas tranché.', action: 'Trancher la question', go: goSug });
+recos.push({ name: 'Pas de maquette liée', comment: 'Un écran existant sert de référence, mais aucune maquette n’est liée.', action: 'Ajouter un lien', go: goChat });
+if (otherPending > 0) recos.push({ name: otherPending + (otherPending > 1 ? ' suggestions non examinées' : ' suggestion non examinée'), comment: 'Elles peuvent révéler des points oubliés.', action: 'Voir les suggestions', go: goSug });
+const valid = [
+{ name: 'Titre', comment: 'clair et orienté utilisateur' },
+{ name: 'Contexte', comment: 'le problème et son origine sont expliqués' },
+{ name: 'Description', comment: 'user story complète' },
+{ name: 'Critères d’acceptation', comment: '3 scénarios, dont un cas négatif' },
+{ name: 'Périmètre', comment: 'web uniquement, mobile exclu' }
+];
+if (termOk) valid.push({ name: 'Commandes concernées', comment: 'livrées et annulées' });
+if (refundDecided) valid.push({ name: 'Question ouverte tranchée', comment: 'remboursement d’une commande archivée' });
+const ready = blockers.length === 0;
+const nb = blockers.length, nr = recos.length;
+const refundTexts = {
+'Oui, elle réapparaît': 'une commande archivée puis remboursée réapparaît dans « Mes commandes ».',
+'Non, elle reste archivée': 'une commande archivée puis remboursée reste archivée.'
+};
+const navBase = 'width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 8px; height: 36px; padding: 0 8px; border: 0; border-radius: 8px; font: inherit; font-size: 14px; text-align: left; cursor: pointer; ';
+const mk = (id, label, b, tone) => {
+const sel = s.tab === id;
+return {
+label: label, isChat: id === 'chat', isSug: id === 'sug', isDiag: id === 'diag',
+current: sel ? 'page' : 'false',
+pick: () => this.setState({ tab: id }),
+style: navBase + (sel ? 'background: #F0F0F0; color: #0A0A0A; font-weight: 500' : 'background: transparent; color: #404040'),
+hasBadge: b !== null, badge: b,
+badgeStyle: 'min-width: 20px; height: 20px; padding: 0 6px; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; font-size: 12px; font-weight: 500; ' + (tone === 'danger' ? 'background: #DC2626; color: #FFFFFF' : 'background: #171717; color: #FAFAFA')
+};
+};
+return {
+tabs: [
+mk('chat', 'Conversation', null, null),
+mk('sug', 'Suggestions', pending > 0 ? String(pending) : null, 'default'),
+mk('diag', 'Diagnostic détaillé', nb > 0 ? String(nb) : null, 'danger')
+],
+panelTitle: s.tab === 'chat' ? 'Conversation' : (s.tab === 'sug' ? 'Suggestions' : 'Diagnostic détaillé'),
+panelSub: s.tab === 'chat' ? 'L’agent affine le ticket avec toi.' : (s.tab === 'sug' ? 'Des points oubliés ou à préciser, repérés dans le projet. Ta réponse est ajoutée au ticket.' : 'Prêt à développer = aucun bloquant. Les recommandations améliorent le ticket sans bloquer l’équipe.'),
+showChat: s.tab === 'chat', showSug: s.tab === 'sug', showDiag: s.tab === 'diag',
+goChat: goChat, goSug: goSug, goDiag: goDiag,
+suggestions: suggestions,
+statusLabel: ready ? 'Prêt à développer' : 'Presque prêt',
+statusBg: ready ? '#F0FDF4' : '#FFFBEB',
+statusBorder: ready ? '#BBF7D0' : '#FDE68A',
+statusFg: ready ? '#15803D' : '#B45309',
+statusReady: ready, statusNotReady: !ready,
+countsLabel: nb + (nb > 1 ? ' bloquants' : ' bloquant') + ' · ' + nr + (nr > 1 ? ' recommandations' : ' recommandation'),
+blockers: blockers, hasBlockers: nb > 0, noBlockers: nb === 0, blockerCount: nb,
+recos: recos, recoCount: nr,
+valid: valid, validCount: valid.length,
+refundDecided: refundDecided, refundOpen: !refundDecided, refundText: refundTexts[refundAns] || '',
+gwt: [
+{ given: 'une commande livrée ou annulée', when: 'le client clique sur « Archiver »', then: 'elle passe de « Mes commandes » à l’onglet « Archivées »' },
+{ given: 'une commande en cours de livraison', when: 'le client affiche ses commandes', then: 'l’action « Archiver » n’est pas proposée' },
+{ given: 'une commande archivée', when: 'le client clique sur « Désarchiver »', then: 'elle revient dans « Mes commandes »' }
+]
+};
+}
+}
+</script>
+</body>
+</html>
