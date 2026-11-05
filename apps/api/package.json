@@ -7,7 +7,8 @@
     "dev": "prisma generate && tsx watch --env-file-if-exists=../../.env src/index.ts",
     "db:migrate": "prisma migrate dev",
     "typecheck": "prisma generate && tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "ask": "tsx --env-file-if-exists=../../.env scripts/ask-repo.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.4.0",
